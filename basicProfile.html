@@ -127,6 +127,15 @@
 
                 elem.value = "";
             }).fail(() => {
+                let list = []
+                list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
+                document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0],
+                document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1]);
+
+                for (let i = 0; i < list.length; i++) {
+                    list[i].remove();
+                }
+
                 let p = document.createElement('p');
 
                 p.innerHTML = "<span style='color: red;'>Error, this account does not exist.</span>";
