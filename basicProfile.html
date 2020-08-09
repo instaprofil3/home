@@ -12,72 +12,9 @@
 
         <input style="text-align: center; border: 2px solid rgb(97, 204, 240)" onkeypress="keyPressed(event, this)"
             placeholder="Instagram Username">
-
-        <button style="text-align: center; border: 2px solid rgb(97, 204, 240)" onclick="loadData()">Load Previous
-            Data</button>
     </div>
 
     <script>
-        // img src, 1st p text, 2nd p text
-        function saveData(src, text1, text2) {
-            let data = [src, text1, text2];
-
-            window.localStorage.setItem('basicProfileData', JSON.stringify(data));
-        }
-
-        function loadData() {
-            if (localStorage.length > 1) {
-                if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0] != undefined && 
-                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0].innerText == "Error, this account does not exist.") {
-                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0].remove();
-                }
-
-                if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img') == undefined) {
-                    let data = JSON.parse(localStorage.getItem('basicProfileData'));
-
-                    let elements = [document.createElement('img'),
-                                    document.createElement('p'),
-                                    document.createElement('p'),
-                                    document.createElement('div')];
-
-                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].appendChild(elements[elements.length - 1]);
-
-                    for (let i = 0; i < elements.length - 1; i++) {
-                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[1].appendChild(elements[i]);
-
-                        switch (i) {
-                            case 0:
-                                elements[i].setAttribute("src", data[0]);
-                                elements[i].setAttribute("style", "padding: 16px;");
-                                break;
-                            // case 1:
-                            //     elements[i].setAttribute('class', 'welcome');
-                            //     elements[i].innerHTML = "<span style='color: pink;'>" + data[1] + "</span>";
-                            //     break;
-                            // case 2:
-                            //     elements[i].setAttribute('class', 'welcome');
-                            //     if (data[2] != "This user doesn't have a Biography") {
-                            //         elements[i].innerHTML = "Biography: " + "<span style='color: pink'>" + data[2].substring(11) + "</span>";
-                            //     } else {
-                            //         elements[i].innerHTML = "<span style='color: red;'>" + data[2] + "</span>"
-                            //     }
-                            //     break;
-                        }
-                    }
-                } else {
-                    let list = [];
-                    list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
-                              document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0],
-                              document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1]);
-
-                    list[0].setAttribute("src", data[0]);
-                    list[1].innerText = data[1];
-                    list[2].innerText = data[2];
-                }
-            }
-        }
-
-
         // Loads Profile
         function loadProfile(elem) {
             $.getJSON('https://www.instagram.com/' + elem.value + '/?__a=1', data => {
@@ -120,9 +57,6 @@
                                 break;
                         }
                     }
-
-                    saveData(elements[0].getAttribute('src'), elements[1].innerText, elements[2].innerText);
-
                 } else {
                     let list = []
                     list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
@@ -137,8 +71,6 @@
                     } else {
                         list[2].innerHTML = "<span style='color: red; padding: 16px;'>This user doesn't have a Biography</span>";
                     }
-
-                    saveData(list[0].getAttribute('src'), list[1].innerText, list[2].innerText);
                 }
 
                 elem.value = "";
