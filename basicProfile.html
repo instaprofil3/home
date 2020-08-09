@@ -32,36 +32,47 @@
                     document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0].remove();
                 }
 
-                let data = JSON.parse(localStorage.getItem('basicProfileData'));
+                if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img') == undefined) {
+                    let data = JSON.parse(localStorage.getItem('basicProfileData'));
 
-                let elements = [document.createElement('img'),
-                                document.createElement('p'),
-                                document.createElement('p'),
-                                document.createElement('div')];
+                    let elements = [document.createElement('img'),
+                                    document.createElement('p'),
+                                    document.createElement('p'),
+                                    document.createElement('div')];
 
-                document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].appendChild(elements[elements.length - 1]);
+                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].appendChild(elements[elements.length - 1]);
 
-                for (let i = 0; i < elements.length - 1; i++) {
-                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[1].appendChild(elements[i]);
+                    for (let i = 0; i < elements.length - 1; i++) {
+                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[1].appendChild(elements[i]);
 
-                    switch (i) {
-                        case 0:
-                            elements[i].setAttribute("src", data[0]);
-                            elements[i].setAttribute("style", "padding: 16px;");
-                            break;
-                        case 1:
-                            elements[i].setAttribute('class', 'welcome');
-                            elements[i].innerHTML = "<span style='color: pink;'>" + data[1] + "</span>";
-                            break;
-                        case 2:
-                            elements[i].setAttribute('class', 'welcome');
-                            if (data[2] != "This user doesn't have a Biography") {
-                                elements[i].innerHTML = "Biography: " + "<span style='color: pink'>" + data[2].substring(11) + "</span>";
-                            } else {
-                                elements[i].innerHTML = "<span style='color: red;'>" + data[2] + "</span>"
-                            }
-                            break;
+                        switch (i) {
+                            case 0:
+                                elements[i].setAttribute("src", data[0]);
+                                elements[i].setAttribute("style", "padding: 16px;");
+                                break;
+                            case 1:
+                                elements[i].setAttribute('class', 'welcome');
+                                elements[i].innerHTML = "<span style='color: pink;'>" + data[1] + "</span>";
+                                break;
+                            case 2:
+                                elements[i].setAttribute('class', 'welcome');
+                                if (data[2] != "This user doesn't have a Biography") {
+                                    elements[i].innerHTML = "Biography: " + "<span style='color: pink'>" + data[2].substring(11) + "</span>";
+                                } else {
+                                    elements[i].innerHTML = "<span style='color: red;'>" + data[2] + "</span>"
+                                }
+                                break;
+                        }
                     }
+                } else {
+                    let list = [];
+                    list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
+                              document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0],
+                              document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1]);
+
+                    list[0].setAttribute("src", data[0]);
+                    list[1].innerText = data[1];
+                    list[2].innerText = data[2];
                 }
             }
         }
