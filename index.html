@@ -1,56 +1,32 @@
-<html>
+<!DOCTYPE html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>InstaProfil3</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/x-icon" href="insta1.png" />
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <h1 style="text-align: center; color:darkmagenta">Get Instagram Profile!</h1> 
-        <h3 style="text-align: center; color:orangered">By Cameron_llll</h3>
-
-        <div style="text-align:center;">
-            <input id="username" placeholder="Instagram Username" autocomplete="off">
-            <p></p>
-            <button onclick="getPfp()">Enter!</button>
-            <p></p>
-            <img id="pfp" src="" alt="">
-            <p id="name"></p>
-            <p id="bio"></p>
+        <div class="list">
+            <ul>
+                <img class="instapic" src="insta.png" alt="InstaProfil3 Logo" height="45" width="45" onclick=' if(confirm("Are you sure you want to redirect to, Instagram.com?")) { window.location.href="https://instagram.com/" } '>
+                    <li onclick="setActive(this), setHome()">Home</li>
+                    <li onclick="setActive(this), setBasicProfile()">Get Basic Profile</li>
+                    <li onclick="setActive(this), setLikedPosts()">Get Top 3 Liked Posts</li>
+                    <li onclick="setActive(this), setLastPosts()">Get Last 3 Posts</li>
+                    <li onclick="setActive(this), setContact()">Contact</li>
+                    <li class="trademark" onclick=' window.location.href="https://instagram.com/cameron_llll" '>Cameron_llll</li>
+            </ul>
         </div>
-        
-        <script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script>
-            function getPfp() {
-                if (document.getElementById('username').value != "") {
-                    $.getJSON('https://www.instagram.com/' + document.getElementById('username').value + '/?__a=1', data => {
 
-                        // Get Profile Picture
-                        document.getElementById('pfp').setAttribute('src', data.graphql.user.profile_pic_url_hd);
-                        document.getElementById('pfp').style = "border: 3px solid red";
+        <main>
+            
+        </main>
 
-                        // Get Username
-                        document.getElementById('name').innerText = data.graphql.user.full_name;
-                        document.getElementById('name').style = "color: blue;";
-
-                        // Get Bio
-                        document.getElementById('bio').style = "color: green;";
-
-                        if (data.graphql.user.biography == "") {
-                            document.getElementById('bio').innerText = "This user doesn't have a bio";
-                        } else {
-                            document.getElementById('bio').innerText = data.graphql.user.biography;
-                        }
-                    });
-                }
-                else {
-                    // Set Profile Picture to Null
-                    document.getElementById('pfp').setAttribute('src', "");
-                    document.getElementById('pfp').style = "";
-
-                    // Set Name To Null
-                    document.getElementById('name').innerText = "";
-
-                    // Set Bio To Null
-                    document.getElementById('bio').innerText = "";
-                }
-            }
-        </script>
+        <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> -->
+        <script src="//code.jquery.com/jquery-3.5.0.js"></script>
+        <script src="index.js"></script>
     </body>
 </html>
