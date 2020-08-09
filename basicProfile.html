@@ -50,18 +50,18 @@
                                 elements[i].setAttribute("src", data[0]);
                                 elements[i].setAttribute("style", "padding: 16px;");
                                 break;
-                            case 1:
-                                elements[i].setAttribute('class', 'welcome');
-                                elements[i].innerHTML = "<span style='color: pink;'>" + data[1] + "</span>";
-                                break;
-                            case 2:
-                                elements[i].setAttribute('class', 'welcome');
-                                if (data[2] != "This user doesn't have a Biography") {
-                                    elements[i].innerHTML = "Biography: " + "<span style='color: pink'>" + data[2].substring(11) + "</span>";
-                                } else {
-                                    elements[i].innerHTML = "<span style='color: red;'>" + data[2] + "</span>"
-                                }
-                                break;
+                            // case 1:
+                            //     elements[i].setAttribute('class', 'welcome');
+                            //     elements[i].innerHTML = "<span style='color: pink;'>" + data[1] + "</span>";
+                            //     break;
+                            // case 2:
+                            //     elements[i].setAttribute('class', 'welcome');
+                            //     if (data[2] != "This user doesn't have a Biography") {
+                            //         elements[i].innerHTML = "Biography: " + "<span style='color: pink'>" + data[2].substring(11) + "</span>";
+                            //     } else {
+                            //         elements[i].innerHTML = "<span style='color: red;'>" + data[2] + "</span>"
+                            //     }
+                            //     break;
                         }
                     }
                 } else {
