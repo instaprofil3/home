@@ -27,6 +27,11 @@
 
         function loadData() {
             if (localStorage.length > 1) {
+                if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0] != undefined && 
+                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0].innerText == "Error, this account does not exist.") {
+                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0].remove();
+                }
+
                 let data = JSON.parse(localStorage.getItem('basicProfileData'));
 
                 let elements = [document.createElement('img'),
@@ -127,13 +132,15 @@
 
                 elem.value = "";
             }).fail(() => {
-                let list = []
-                list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
-                document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0],
-                document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1]);
+                if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0] != undefined) {
+                    let list = []
+                    list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
+                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0],
+                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1]);
 
-                for (let i = 0; i < list.length; i++) {
-                    list[i].remove();
+                    for (let i = 0; i < list.length; i++) {
+                        list[i].remove();
+                    }
                 }
 
                 let p = document.createElement('p');
