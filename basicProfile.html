@@ -26,6 +26,7 @@
                     let elements = [document.createElement('img'),
                     document.createElement('p'),
                     document.createElement('p'),
+                    document.createElement('p'),
                     document.createElement('div')];
 
                     // img.setAttribute('src', data.graphql.user.profile_pic_url_hd);
@@ -50,10 +51,14 @@
                                 case 2:
                                     elements[i].setAttribute('class', 'welcome');
                                     if (data.graphql.user.biography != "") {
-                                        elements[i].innerHTML = "Biography: <span style='color: pink'>" + data.graphql.user.biography + "</span>";
+                                        elements[i].innerHTML = "Biography:<span style='color: pink'>" + data.graphql.user.biography + "</span>";
                                     } else {
                                         elements[i].innerHTML = "<span style='color: red; padding: 16px;'>This user doesn't have a Biography</span>";
                                     }
+                                    break;
+                                case 3:
+                                    elements[i].setAttribute('class', 'welcome');
+                                    elements[i].innerHTML = "Followers:<span style='color: pink;'> " + data.graphql.user.edge_followed_by.count + "</span>, Following:<span style='color: pink'> " + data.graphql.user.edge_follow.count + "</span>"
                                     break;
                             }
                         }
