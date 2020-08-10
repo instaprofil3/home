@@ -6,8 +6,7 @@
 </head>
 
 <body>
-    <div
-        style="text-align: center; border: 2px solid white; width: 60em; height: 50em; margin: auto; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+    <div class="divbox">
         <h1 style="color:pink;" class="welcome">Basic Profile</h1>
 
         <input style="text-align: center; border: 2px solid rgb(97, 204, 240)" onkeypress="keyPressed(event, this)"
@@ -17,84 +16,87 @@
     <script>
         // Loads Profile
         function loadProfile(elem) {
-            $.getJSON('https://www.instagram.com/' + elem.value + '/?__a=1', data => {
-                if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0] != undefined && 
-                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0].innerText == "Error, this account does not exist.") {
-                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0].remove();
-                }
+            if (elem.value != "") {
+                $.getJSON('https://www.instagram.com/' + elem.value + '/?__a=1', data => {
+                    if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0] != undefined &&
+                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0].innerText == "Error, this account does not exist.") {
+                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0].remove();
+                    }
 
-                let elements = [document.createElement('img'),
-                                document.createElement('p'),
-                                document.createElement('p'),
-                                document.createElement('div')];
+                    let elements = [document.createElement('img'),
+                    document.createElement('p'),
+                    document.createElement('p'),
+                    document.createElement('div')];
 
-                // img.setAttribute('src', data.graphql.user.profile_pic_url_hd);
-                // img.setAttribute('alt', 'Profile Picture');
-                // img.setAttribute('style', 'padding: 16px;');
+                    // img.setAttribute('src', data.graphql.user.profile_pic_url_hd);
+                    // img.setAttribute('alt', 'Profile Picture');
+                    // img.setAttribute('style', 'padding: 16px;');
 
-                if (document.getElementsByTagName('main')[0].getElementsByTagName('img').length < 1) {
-                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].appendChild(elements[elements.length - 1]);
+                    if (document.getElementsByTagName('main')[0].getElementsByTagName('img').length < 1) {
+                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].appendChild(elements[elements.length - 1]);
 
-                    for (let i = 0; i < elements.length - 1; i++) {
-                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[1].appendChild(elements[i]);
+                        for (let i = 0; i < elements.length - 1; i++) {
+                            document.getElementsByTagName('main')[0].getElementsByTagName('div')[1].appendChild(elements[i]);
 
-                        switch (i) {
-                            case 0:
-                                elements[i].setAttribute("src", data.graphql.user.profile_pic_url_hd);
-                                elements[i].setAttribute("style", "padding: 16px;");
-                                break;
-                            case 1:
-                                elements[i].setAttribute('class', 'welcome');
-                                elements[i].innerHTML = "<span style='color: pink; padding: 16px;'>" + data.graphql.user.full_name + "</span>";
-                                break;
-                            case 2:
-                                elements[i].setAttribute('class', 'welcome');
-                                if (data.graphql.user.biography != "") {
-                                    elements[i].innerHTML = "Biography: <span style='color: pink'>" + data.graphql.user.biography + "</span>";
-                                } else {
-                                    elements[i].innerHTML = "<span style='color: red; padding: 16px;'>This user doesn't have a Biography</span>";
-                                }
-                                break;
+                            switch (i) {
+                                case 0:
+                                    elements[i].setAttribute("src", data.graphql.user.profile_pic_url_hd);
+                                    elements[i].setAttribute("style", "padding: 16px;");
+                                    break;
+                                case 1:
+                                    elements[i].setAttribute('class', 'welcome');
+                                    elements[i].innerHTML = "<span style='color: pink; padding: 16px;'>" + data.graphql.user.full_name + "</span>";
+                                    break;
+                                case 2:
+                                    elements[i].setAttribute('class', 'welcome');
+                                    if (data.graphql.user.biography != "") {
+                                        elements[i].innerHTML = "Biography: <span style='color: pink'>" + data.graphql.user.biography + "</span>";
+                                    } else {
+                                        elements[i].innerHTML = "<span style='color: red; padding: 16px;'>This user doesn't have a Biography</span>";
+                                    }
+                                    break;
+                            }
+                        }
+                    } else {
+                        let list = []
+                        list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
+                            document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0],
+                            document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1]);
+
+                        list[0].setAttribute('src', data.graphql.user.profile_pic_url_hd);
+                        list[1].innerText = data.graphql.user.full_name;
+
+                        if (data.graphql.user.biography != "") {
+                            list[2].innerHTML = "Biography:<span style='color: pink; padding: 16px;'>" + data.graphql.user.biography + "</span>";
+                        } else {
+                            list[2].innerHTML = "<span style='color: red; padding: 16px;'>This user doesn't have a Biography</span>";
                         }
                     }
-                } else {
-                    let list = []
-                    list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
-                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0],
-                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1]);
 
-                    list[0].setAttribute('src', data.graphql.user.profile_pic_url_hd);
-                    list[1].innerText = data.graphql.user.full_name;
+                    elem.value = "";
+                }).fail(() => {
+                    if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0] != undefined) {
+                        let list = []
+                        list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
+                            document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0],
+                            document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1]);
 
-                    if (data.graphql.user.biography != "") {
-                        list[2].innerHTML = "Biography:<span style='color: pink; padding: 16px;'>" + data.graphql.user.biography + "</span>";
-                    } else {
-                        list[2].innerHTML = "<span style='color: red; padding: 16px;'>This user doesn't have a Biography</span>";
+                        for (let i = 0; i < list.length; i++) {
+                            list[i].remove();
+                        }
                     }
-                }
 
-                elem.value = "";
-            }).fail(() => {
-                if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0] != undefined) {
-                    let list = []
-                    list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0],
-                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[0],
-                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1]);
+                    if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p').length < 1) {
+                        let p = document.createElement('p');
 
-                    for (let i = 0; i < list.length; i++) {
-                        list[i].remove();
+                        p.innerHTML = "<span style='color: red;'>Error, this account does not exist.</span>";
+
+                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].appendChild(p);
                     }
-                }
 
-                let p = document.createElement('p');
-
-                p.innerHTML = "<span style='color: red;'>Error, this account does not exist.</span>";
-
-                document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].appendChild(p);
-
-                elem.value = "";
-            });
-
+                    elem.value = "";
+                });
+            }
         }
 
         function keyPressed(event, elem) {

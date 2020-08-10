@@ -61,3 +61,12 @@ body {
 .welcome {
     overflow-wrap: break-word; color: white; text-align: center;
 }
+
+.divbox {
+    text-align: center; 
+    border: 2px solid white; 
+    width: 60em; 
+    height: 50em; 
+    margin: auto; 
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
