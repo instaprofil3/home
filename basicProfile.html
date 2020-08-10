@@ -14,6 +14,39 @@
     </div>
 
     <script>
+        function findCommon(data, profile) {
+            let placeholder = false;
+
+            for (let i = 0; i < data.length; i++) {
+                if (data[i] == profile) {
+                    return false;
+                } else {
+                    placeholder = true;
+                }
+            }
+
+            return placeholder;
+        }
+
+        // Adds Profile To History
+        function addProfile(profile) {
+            let data = [];
+
+            if (localStorage.getItem("Lookup History") == null) {
+                data.push(profile);
+
+                localStorage.setItem("Lookup History", JSON.stringify(data));
+            } else {
+                data = JSON.parse(localStorage.getItem("Lookup History"));
+
+                if(findCommon(data, profile)) {
+                    data.push(profile);
+
+                    localStorage.setItem("Lookup History", JSON.stringify(data));
+                }
+            }
+        }
+
         // Loads Profile
         function loadProfile(elem) {
             if (elem.value != "") {
@@ -81,6 +114,7 @@
                         list[3].innerHTML = "Followers:<span style='color: pink;'> " + data.graphql.user.edge_followed_by.count + "</span>, Following:<span style='color: pink'> " + data.graphql.user.edge_follow.count + "</span> Posts: <span style='color: pink;'>" + data.graphql.user.edge_owner_to_timeline_media.count + "</span>";
                     }
 
+                    addProfile(elem.value);
                     elem.value = "";
                 }).fail(() => {
                     if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0] != undefined) {
