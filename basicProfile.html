@@ -51,7 +51,7 @@
                                 case 2:
                                     elements[i].setAttribute('class', 'welcome');
                                     if (data.graphql.user.biography != "") {
-                                        elements[i].innerHTML = "Biography:<span style='color: pink'>" + data.graphql.user.biography + "</span>";
+                                        elements[i].innerHTML = "Biography: <span style='color: pink'>" + data.graphql.user.biography + "</span>";
                                     } else {
                                         elements[i].innerHTML = "<span style='color: red; padding: 16px;'>This user doesn't have a Biography</span>";
                                     }
@@ -73,7 +73,7 @@
                         list[1].innerText = data.graphql.user.full_name;
 
                         if (data.graphql.user.biography != "") {
-                            list[2].innerHTML = "Biography:<span style='color: pink; padding: 16px;'>" + data.graphql.user.biography + "</span>";
+                            list[2].innerHTML = "Biography: <span style='color: pink; padding: 16px;'>" + data.graphql.user.biography + "</span>";
                         } else {
                             list[2].innerHTML = "<span style='color: red; padding: 16px;'>This user doesn't have a Biography</span>";
                         }
