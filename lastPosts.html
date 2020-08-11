@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="divbox welcome">
+        <h1 style="color: pink;">Last 3 Posts</h1>
+
+        <input style="text-align: center; border: 2px solid rgb(97, 204, 240);" onkeypress="keyPressed(event, this)"
+            placeholder="Instagram Username">
+
+        <p></p>
+    </div>
+
+    <script>
+        function createElement(elem) {
+            document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].appendChild(elem);
+        }
+
+        function createError(err) {
+            let p = document.createElement('p');
+
+            p.setAttribute('style', 'color: red;');
+            p.setAttribute('class', 'welcome');
+
+            p.innerHTML = '<span style="color: red;">' + err + '</span';
+
+            createElement(p);
+        }
+
+        function loadProfile(elem) {
+            $.getJSON('https://www.instagram.com/' + elem.value + '/?__a=1', data => {
+                if (!data.graphql.user.is_private && data.graphql.user.edge_owner_to_timeline_media.count != 0) {
+                    if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1] != undefined) {
+                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1].remove();
+                    }
+
+                    if (document.getElementsByTagName('main')[0].getElementsByTagName('img').length < 1) {
+                        let elements = [document.createElement('img'),
+                        document.createElement('img'),
+                        document.createElement('img'),
+                        document.createElement('div')];
+
+                        let posts = [];
+
+                        for (let i = 0; i < 3; i++) {
+                            posts.push(data.graphql.user.edge_owner_to_timeline_media.edges[i].node.display_url);
+                        }
+
+                        //console.log(posts);
+
+                        document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].appendChild(elements[elements.length - 1]);
+
+                        for (let i = 0; i < elements.length - 1; i++) {
+                            document.getElementsByTagName('main')[0].getElementsByTagName('div')[1].appendChild(elements[i]);
+
+                            elements[i].setAttribute('src', posts[i]);
+                            elements[i].setAttribute('height', 250), elements[i].setAttribute('width', 250);
+                        }
+                    } else {
+                        let list = [];
+
+                        let posts = [];
+
+                        for (let i = 0; i < 3; i++) {
+                            posts.push(data.graphql.user.edge_owner_to_timeline_media.edges[i].node.display_url);
+                        }
+
+                        for (let i = 0; i < 3; i++) {
+                            list.push(document.getElementsByTagName('main')[0].getElementsByTagName('img')[i]);
+                        }
+
+                        for (let i = 0; i < 3; i++) {
+                            list[i].setAttribute('src', posts[i]);
+                        }
+                    }
+                } else {
+                    if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0] != undefined) {
+                    let list = []
+
+                    for (let i = 0; i < document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img').length; i++) {
+                        list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[i]);
+                    }
+
+                    for (let i = 0; i < list.length; i++) {
+                        list[i].remove();
+                    }
+                }
+
+                    // call createerror function
+                    if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p').length < 2) {
+                    createError('Error, this account is currently private.');
+                } else if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1].innerText != "Error, this account is currently private.") {
+                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1].innerText = 'Error, this account is currently private.';
+                }
+                }
+            }).fail(() => {
+                // Checks if content has already been loaded on the page
+                if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[0] != undefined) {
+                    let list = []
+
+                    for (let i = 0; i < document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img').length; i++) {
+                        list.push(document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('img')[i]);
+                    }
+
+                    for (let i = 0; i < list.length; i++) {
+                        list[i].remove();
+                    }
+                }
+
+                // call createerror function
+                if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p').length < 2) {
+                    createError('Error, this account does not exist.');
+                } else if (document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1].innerText != "Error, this account does not exist.") {
+                    document.getElementsByTagName('main')[0].getElementsByTagName('div')[0].getElementsByTagName('p')[1].innerText = 'Error, this account does not exist.';
+                }
+
+                elem.value = "";
+            }).done(() => {
+                elem.value = "";
+            });
+
+        }
+
+        function keyPressed(event, elem) {
+            if (event.keyCode == 13) {
+                loadProfile(elem);
+            }
+        }
+    </script>
+</body>
+
+</html>
